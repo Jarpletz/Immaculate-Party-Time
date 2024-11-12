@@ -1,14 +1,69 @@
 {% extends "teamContainer.html" %}
 
-{% block content %}
-<h1>Depth Chart for Team {{ teamId }} ({{ year }})</h1>
+{% block teamData %}
+    <h1>Depth Chart for {{ teamID }} - {{ year }}</h1>
 
-{% for position, players in position_data.items() %}
-    <h2>Position: {{ position }}</h2>
-    <ul>
-    {% for player in players[:6] %}  {# Limit to top 6 players #}
-        <li>{{ player.name }} - {{ player.time_percentage }}</li>
-    {% endfor %}
-    </ul>
-{% endfor %}
+    <!-- Dropdown to select the stat -->
+    <label for="stat-dropdown">Select Stat:</label>
+    <select id="stat-dropdown">
+        <option value="percentage">Percentage</option>
+        <option value="PA">Plate Appearances (PA)</option>
+        <!-- Add more stat options as needed -->
+    </select>
+
+    <div id="depthChart-container">
+        <!-- The table will be inserted here after the AJAX call -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>{{ stat | title }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for position, results in positions_stats.items() %}
+                    <tr>
+                        <td colspan="4"><strong>{{ position }}</strong></td>
+                    </tr>
+                    {% for row in results %}
+                        <tr>
+                            <td>{{ position }}</td>
+                            <td>{{ row.nameFirst }}</td>
+                            <td>{{ row.nameLast }}</td>
+                            <td>{{ row.stat_value }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            // This assumes you have a div with id="depthChart-container" to hold the results
+            $('#stat-dropdown').change(function () {
+                const selectedStat = $(this).val();  // Get the selected stat (PA or percentage)
+                const selectedYear = $("#year-dropdown").val();  // The selected year from the dropdown
+                const teamId = $("#team-dropdown").val();  // The selected team ID from the dropdown
+
+                if (selectedStat && selectedYear && teamId) {
+                    // Make the AJAX request to fetch updated data
+                    $.get(`/depthChart/${teamId}?year=${selectedYear}&stat=${selectedStat}`, function (data) {
+                        // Replace the content of the #depthChart-container with the new HTML
+                        $('#depthChart-container').html(data);
+                    }).fail(function() {
+                        alert("Error retrieving data.");
+                    });
+                } else {
+                    alert("Please select all options.");
+                }
+            });
+        });
+
+    </script>
 {% endblock %}

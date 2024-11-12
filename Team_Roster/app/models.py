@@ -105,7 +105,6 @@ class Fielding(Base):
     f_CS = Column(SmallInteger, nullable=True)
     f_ZR = Column(Double, nullable=True)
 
-    fielding_stats = relationship("Fielding", back_populates="player")
 
 
     def __repr__(self):
@@ -137,7 +136,6 @@ class People(Base):
     debutDate = Column(Date, nullable=True)
     finalGameDate = Column(Date, nullable=True)
 
-    player = relationship("People", back_populates="fielding_stats")
     
     def __repr__(self):
         return '<People: {} {}, ID:{}>'.format(self.nameFirst,self.nameLast,self.playerID)
