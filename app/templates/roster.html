@@ -154,7 +154,7 @@
     </thead>
     <tbody>
         {% for player_id, stats in batting_data.items() %}
-        {% if stats["PA"]>0 %}
+        {% if stats["PA"]>0 or stats["AB"]>0%}
         <tr>
             <td>
                 <a href={{"https://www.baseball-reference.com/players/{}/{}.shtml".format(player_id[0],player_id)}}
