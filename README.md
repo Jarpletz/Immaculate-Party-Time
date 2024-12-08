@@ -14,7 +14,7 @@ To run the app, some configuration is required:
 2. Start your virtual environment
 3. Run `pip install -r config\requirements.txt`
 4. Add the database user the app uses
-    a. Start an instance of MariahDB in your terminal: `mysql -u root -p`
+    a. Start an instance of MariaDB in your terminal: `mysql -u root -p`
     b. Add the user: `\. config\addUser.sql`
     c. exit mysql: `exit`
 5. Update the database (see below)
