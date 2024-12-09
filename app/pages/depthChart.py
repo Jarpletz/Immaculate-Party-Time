@@ -295,6 +295,7 @@ def getBattingStats(teamId, year):
                     func.sum(Batting.b_SH) +
                     func.sum(Batting.b_SF)
             ).label("PA"),
+            func.sum(Batting.b_AB).label("AB"),
             func.sum(Batting.b_HR).label("HR"),
             func.sum(Batting.b_SB).label("SB"),
             (func.sum(Batting.b_BB) / func.sum(Batting.b_AB)).label("BB"),
@@ -384,6 +385,7 @@ def getBattingStats(teamId, year):
             subquery.c.player_id,
             subquery.c["G"],
             subquery.c.PA,
+            subquery.c.AB,
             subquery.c.HR,
             subquery.c.SB,
             subquery.c["BB"],
@@ -409,6 +411,7 @@ def getBattingStats(teamId, year):
             "player_id": result.player_id,
             "G": result.G,
             "PA": result.PA or 0,
+            "AB": result.AB or 0,
             "HR": result.HR or 0,
             "SB": result.SB or 0,
             "BB%": result.BB or 0,
