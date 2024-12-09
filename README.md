@@ -10,13 +10,14 @@ Members:
 ## Config 
 To run the app, some configuration is required:
 
-1. Set up your python virtal environment
+1. Set up your python virtual environment
 2. Start your virtual environment
 3. Run `pip install -r config\requirements.txt`
 4. Add the database user the app uses
     1. Start an instance of MariaDB in your terminal: `mysql -u root -p`
-    2. Add the user: `\. config\addUser.sql`
-    3. exit mysql: `exit`
+    2. Add the user: `\. config\addUser.sql`. 
+    3. Note this sets the user to <i>partyTimeUser</i> and password to <i>partyTimePassword</i>
+    4. exit mysql: `exit`
 5. Update the database (see below)
 
 **If you want to change what database, port, etc. the app uses:**
@@ -43,11 +44,11 @@ We have added significant changes to the database, adding the 2023 data and some
 ### Create New Database from Dump
 
 To create a new database with all the data needed to run the app, run the following commands in your terminal:
-1. Open your MariahDB interface from the project root folder: `mysql -u user -p`
+1. Open your MariahDB interface from the project root folder: `mysql -u user -p` or `mysql -u partyTimeUser -p`
 2. Create the database: `create database immaculatePartyTime;`
 3. Seed the databse with the dump: `\. immaculatePartyTime.sql`
 
-### Updating the databse from a previous version 
+### Updating the database from a previous version 
 
 To update the database to have the needed extra data in order to run the run the app, as well as to update the database with 2023 player data:
 1. Set up the project configuration (see the config section)
